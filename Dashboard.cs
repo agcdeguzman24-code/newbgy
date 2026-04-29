@@ -29,10 +29,25 @@ namespace Barangay_Management_System
             this.Hide();
         }
 
-        private void Dashboard_Load(object sender, EventArgs e)
-        {
-            
-        }
+         private void Dashboard_Load(object sender, EventArgs e)
+ {
+     LoadCounts(); 
+
+     chart1.Series.Clear();
+     chart1.ChartAreas.Clear();
+
+     chart1.ChartAreas.Add(new ChartArea());
+
+     Series gender = new Series("Gender");
+     gender.ChartType = SeriesChartType.Column;
+
+     gender.Points.AddXY("Male", 45);
+     gender.Points.AddXY("Female", 55);
+
+     chart1.Series.Add(gender);
+
+
+ }
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -106,5 +121,116 @@ namespace Barangay_Management_System
             f3.Show();
             this.Hide();
         }
+
+                private void LoadCounts()
+        {
+            string connString = "server=localhost;user id=root;password=;database=barangay_management_system;";
+
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    // TOTAL REQUESTS
+                    string totalQuery = "SELECT COUNT(*) FROM certificate_requests";
+                    MySqlCommand totalCmd = new MySqlCommand(totalQuery, conn);
+                    int total = Convert.ToInt32(totalCmd.ExecuteScalar());
+
+                    label30.Text = total.ToString(); // PALITAN mo based sa label name mo
+
+                    // CLEARANCE
+                    string clearanceQuery = "SELECT COUNT(*) FROM certificate_requests WHERE certificate='clearance'";
+                    MySqlCommand cCmd = new MySqlCommand(clearanceQuery, conn);
+                    label28.Text = cCmd.ExecuteScalar().ToString();
+
+                    // INDIGENCY
+                    string indigencyQuery = "SELECT COUNT(*) FROM certificate_requests WHERE certificate='indigency'";
+                    MySqlCommand iCmd = new MySqlCommand(indigencyQuery, conn);
+                    label26.Text = iCmd.ExecuteScalar().ToString();
+
+                    // GOOD MORAL
+                    string gmQuery = "SELECT COUNT(*) FROM certificate_requests WHERE certificate='good moral'";
+                    MySqlCommand gmCmd = new MySqlCommand(gmQuery, conn);
+                    label24.Text = gmCmd.ExecuteScalar().ToString();
+
+                    // RESIDENCY
+                    string resQuery = "SELECT COUNT(*) FROM certificate_requests WHERE certificate='residency'";
+                    MySqlCommand rCmd = new MySqlCommand(resQuery, conn);
+                    label22.Text = rCmd.ExecuteScalar().ToString();
+
+                    // SOLO PARENT
+                    string spQuery = "SELECT COUNT(*) FROM certificate_requests WHERE certificate='solo parent'";
+                    MySqlCommand spCmd = new MySqlCommand(spQuery, conn);
+                    label20.Text = spCmd.ExecuteScalar().ToString();
+
+                    // NO INCOME
+                    string niQuery = "SELECT COUNT(*) FROM certificate_requests WHERE certificate='no income'";
+                    MySqlCommand niCmd = new MySqlCommand(niQuery, conn);
+                    label19.Text = niCmd.ExecuteScalar().ToString();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
+        }
+
+
+
+        private void label28_Click(object sender, EventArgs e)
+        {
+           
+
+        }
+
+        private void label26_Click(object sender, EventArgs e)
+        {
+          
+
+        }
+
+        private void label24_Click(object sender, EventArgs e)
+        {
+            
+
+        }
+
+        private void label22_Click(object sender, EventArgs e)
+        {
+          
+
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+            
+
+        }
+
+        private void label19_Click(object sender, EventArgs e)
+        {
+          
+
+        }
+
+        private void label30_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
